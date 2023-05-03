@@ -11,10 +11,11 @@ import java.util.HashMap;
 public class FileReader {
 
     public Profile getDataFromFile(File file) {
-        return new Profile();
+
+        return createProfile(file);
     }
 
-    private String[] readFile(File file) {
+    private String[] readFile (File file) {
         String[] finalOutput = null;
         String absolutePath = file.getAbsolutePath();
 
@@ -28,18 +29,18 @@ public class FileReader {
                     continue;
                 }
 
-                finalOutput[count] = finalOutput[count] + (char) c;
+                finalOutput[count] = finalOutput[count] + (char)c;
 
             }
 
-        } catch (IOException ex) {
+        } catch(IOException ex) {
             ex.printStackTrace();
         }
 
         return finalOutput;
     }
 
-    HashMap<String, String> parseKeyValue(String  [] inputString) {
+    private @NotNull HashMap<String, String> parseKeyValue (String @NotNull [] inputString)  {
         HashMap<String, String> finalOutput = new HashMap<>();
 
         finalOutput.put("Name", inputString[0].substring(inputString[0].indexOf(':') + 2));
@@ -50,9 +51,9 @@ public class FileReader {
         return finalOutput;
     }
 
-    Profile createProfile(File file) {
+    private @NotNull Profile createProfile (File file) {
         HashMap<String, String> map = parseKeyValue(readFile(file));
-        return new Profile(map.get("Name"), Integer.parseInt(map.get("Age")),
+        return new Profile (map.get("Name"), Integer.parseInt(map.get("Age")),
                 map.get("Email"), Long.parseLong(map.get("Phone")));
     }
 }
