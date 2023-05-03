@@ -1,8 +1,11 @@
 package com.epam.mjc.io;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public class FileReader {
@@ -34,5 +37,22 @@ public class FileReader {
         }
 
         return finalOutput;
+    }
+
+    HashMap<String, String> parseKeyValue(String  [] inputString) {
+        HashMap<String, String> finalOutput = new HashMap<>();
+
+        finalOutput.put("Name", inputString[0].substring(inputString[0].indexOf(':') + 2));
+        finalOutput.put("Age", inputString[1].substring(inputString[1].indexOf(':') + 2));
+        finalOutput.put("Email", inputString[2].substring(inputString[2].indexOf(':') + 2));
+        finalOutput.put("Phone", inputString[3].substring(inputString[3].indexOf(':') + 2));
+
+        return finalOutput;
+    }
+
+    Profile createProfile(File file) {
+        HashMap<String, String> map = parseKeyValue(readFile(file));
+        return new Profile(map.get("Name"), Integer.parseInt(map.get("Age")),
+                map.get("Email"), Long.parseLong(map.get("Phone")));
     }
 }
