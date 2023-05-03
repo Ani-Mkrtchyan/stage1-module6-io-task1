@@ -22,7 +22,8 @@ public class FileReader {
         try (FileInputStream inputStream = new FileInputStream(absolutePath);) {
             finalOutput = new String[4];
 
-            int c, count = 0;
+            int c =1;
+            int count = 0;
             while ((c = inputStream.read()) != -1) {
                 if (c == 10) {
                     count++;
